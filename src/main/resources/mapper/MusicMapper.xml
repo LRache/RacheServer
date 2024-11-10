@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rache.racheserver.mapper.MusicMapper">
+    <select id="selectAll" resultType="com.rache.racheserver.entity.MusicConfigEntity">
+        select * from musicConfig;
+    </select>
+    <select id="getLastInsertID" resultType="Integer">
+        select LAST_INSERT_ID();
+    </select>
+
+    <select id="selectById" resultType="com.rache.racheserver.entity.MusicConfigEntity">
+        select * from musicconfig where id = #{id};
+    </select>
+
+    <select id="selectLyricsById" resultType="com.rache.racheserver.entity.MusicConfigEntity">
+        select id, lyrics from musicconfig where id=#{id};
+    </select>
+
+    <select id="selectAudioById" resultType="com.rache.racheserver.entity.MusicConfigEntity">
+        select audio from musicconfig where id=#{id};
+    </select>
+
+    <select id="selectCoverById" resultType="com.rache.racheserver.entity.MusicConfigEntity">
+        select cover from musicconfig where id=#{id}
+    </select>
+
+    <insert id="insertConfig">
+        insert into musicconfig (name, singer, album) values (#{name}, #{singer}, #{album});
+    </insert>
+
+    <update id="updateLyrics">
+        update musicconfig set lyrics=#{lyrics} where id=#{id};
+    </update>
+
+    <update id="updateAudio">
+        update musicconfig set audio=#{audio} where id=#{id};
+    </update>
+
+    <update id="updateCover">
+        update musicconfig set cover=#{cover} where id=#{id};
+    </update>
+</mapper>
