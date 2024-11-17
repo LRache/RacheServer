@@ -9,6 +9,12 @@ public class MusicConfigEntity {
     private String album;
     private String lyrics;
 
+    private boolean multilineLyrics;
+
+    private int playCount;
+
+    private String description;
+
     public int getId() {
         return id;
     }
@@ -63,5 +69,29 @@ public class MusicConfigEntity {
 
     public void setLyrics(String lyrics) {
         this.lyrics = lyrics;
+    }
+
+    public boolean isMultilineLyrics() {
+        return multilineLyrics;
+    }
+
+    public void setMultilineLyrics(boolean multilineLyrics) {
+        this.multilineLyrics = multilineLyrics;
+    }
+
+    public int getPlayCount() {
+        return playCount;
+    }
+
+    public void setPlayCount(int playCount) {
+        this.playCount = playCount;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -5,6 +5,10 @@ public class PostConfig {
     private String singer;
     private String album;
 
+    private boolean multiline;
+
+    private String description;
+
     public String getName() {
         return name;
     }
@@ -27,5 +31,21 @@ public class PostConfig {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public boolean isMultiline() {
+        return multiline;
+    }
+
+    public void setMultiline(boolean multiline) {
+        this.multiline = multiline;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

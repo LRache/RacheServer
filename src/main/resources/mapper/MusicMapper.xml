@@ -27,7 +27,8 @@
     </select>
 
     <insert id="insertConfig">
-        insert into musicconfig (name, singer, album) values (#{name}, #{singer}, #{album});
+        insert into musicconfig (name, singer, album, multilineLyrics, description)
+        values (#{name}, #{singer}, #{album}, #{multiline}, #{description});
     </insert>
 
     <update id="updateLyrics">

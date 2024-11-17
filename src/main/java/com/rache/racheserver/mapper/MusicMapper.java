@@ -12,7 +12,7 @@ public interface MusicMapper {
 
     Integer getLastInsertID();
 
-    int insertConfig(String name, String singer, String album);
+    int insertConfig(String name, String singer, String album, boolean multiline, String description);
 
     int updateLyrics(int id, String lyrics);
     int updateAudio(int id, String audio);

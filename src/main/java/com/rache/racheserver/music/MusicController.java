@@ -78,7 +78,13 @@ public class MusicController {
 
     @PostMapping("/config")
     private ResponseEntity<Map<String, Object>> postMusicConfig(PostConfig config) {
-        int rowAffected = musicMapper.insertConfig(config.getName(), config.getSinger(), config.getAlbum());
+        int rowAffected = musicMapper.insertConfig(
+            config.getName(),
+            config.getSinger(),
+            config.getAlbum(),
+            config.isMultiline(),
+            config.getDescription()
+        );
         if (rowAffected == 0) {
             Map<String, Object> response = new HashMap<>();
             response.put("code", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,12 +112,16 @@ public class MusicController {
         } else {
             responseStatus = HttpStatus.OK;
             message = "success";
+
             MusicConfigEntity config = configList.get(0);
             GetConfig responseConfig = new GetConfig();
             responseConfig.setId(config.getId());
             responseConfig.setName(config.getName());
             responseConfig.setSinger(config.getSinger());
             responseConfig.setAlbum(config.getAlbum());
+            responseConfig.setMultilineLyrics(config.isMultilineLyrics());
+            responseConfig.setDescription(config.getDescription());
+
             response.put("config", responseConfig);
         }
 
@@ -203,6 +213,7 @@ public class MusicController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
         String filename = configList.get(0).getAudio();
+        System.out.println(filename);
         File audioFile = new File(musicProperties.getAudioDir() + "//" + filename);
         org.springframework.core.io.Resource resource = new FileSystemResource(audioFile);
         HttpHeaders headers = new HttpHeaders();

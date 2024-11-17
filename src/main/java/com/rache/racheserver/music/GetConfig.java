@@ -6,6 +6,10 @@ public class GetConfig {
     private String singer;
     private String album;
 
+    private boolean multilineLyrics;
+
+    private String description;
+
     public int getId() {
         return id;
     }
@@ -36,5 +40,21 @@ public class GetConfig {
 
     public void setAlbum(String album) {
         this.album = album;
+    }
+
+    public boolean isMultilineLyrics() {
+        return multilineLyrics;
+    }
+
+    public void setMultilineLyrics(boolean multilineLyrics) {
+        this.multilineLyrics = multilineLyrics;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
