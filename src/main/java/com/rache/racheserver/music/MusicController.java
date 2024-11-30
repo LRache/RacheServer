@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -99,8 +100,7 @@ public class MusicController {
         return ResponseEntity.ok().body(response);
     }
 
-    @GetMapping("/config")
-    private ResponseEntity<Map<String, Object>> getMusicConfig(@RequestParam(value = "id") int id) {
+    private ResponseEntity<Map<String, Object>> getMusicConfigById(int id) {
         List<MusicConfigEntity> configList = musicMapper.selectById(id);
 
         Map<String, Object> response = new HashMap<>();
@@ -129,6 +129,46 @@ public class MusicController {
         response.put("code", responseStatus.value());
         response.put("message", message);
         return ResponseEntity.status(responseStatus).body(response);
+    }
+
+    private ResponseEntity<Map<String, Object>> getLimitedConfig(int start) {
+        List<MusicConfigEntity> configEntityList = musicMapper.selectLimit(100, start);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("start", start);
+        response.put("code", HttpStatus.OK);
+        response.put("message", "success");
+        response.put("count", configEntityList.size());
+
+        List<GetConfig> responseConfigList = new ArrayList<>();
+        for (MusicConfigEntity entity: configEntityList) {
+            GetConfig e = new GetConfig();
+            e.setId(entity.getId());
+            e.setName(entity.getName());
+            e.setSinger(entity.getSinger());
+            e.setAlbum(entity.getAlbum());
+            responseConfigList.add(e);
+        }
+        response.put("config", responseConfigList);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/config")
+    private ResponseEntity<Map<String, Object>> getMusicConfig(
+            @RequestParam(value = "id", required = false, defaultValue = "-1") int id,
+            @RequestParam(value = "start", required = false, defaultValue = "-1") int start
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", HttpStatus.BAD_REQUEST.value());
+        response.put("message", "Bad request");
+        ResponseEntity<Map<String, Object>> badRequestResponse = ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        if (id != -1) {
+            if (start != -1) return badRequestResponse;
+            return getMusicConfigById(id);
+        } else {
+            if (start == -1) return badRequestResponse;
+            return getLimitedConfig(start);
+        }
     }
 
     @PostMapping("/lyrics")

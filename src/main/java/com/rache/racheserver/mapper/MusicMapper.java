@@ -7,6 +7,9 @@ import java.util.List;
 public interface MusicMapper {
     List<MusicConfigEntity> selectAll();
     List<MusicConfigEntity> selectById(int id);
+
+    List<MusicConfigEntity> selectLimit(int limit, int start);
+
     List<MusicConfigEntity> selectAudioById(int id);
     List<MusicConfigEntity> selectCoverById(int id);
 

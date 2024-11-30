@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.rache.racheserver.mapper.MusicMapper">
-    <select id="selectAll" resultType="com.rache.racheserver.entity.MusicConfigEntity">
-        select * from musicConfig;
-    </select>
     <select id="getLastInsertID" resultType="Integer">
         select LAST_INSERT_ID();
+    </select>
+    
+    <select id="selectLimit" resultType="com.rache.racheserver.entity.MusicConfigEntity">
+        select id, name, singer, album from musicconfig ORDER BY id LIMIT #{limit} OFFSET #{start}
     </select>
 
     <select id="selectById" resultType="com.rache.racheserver.entity.MusicConfigEntity">
